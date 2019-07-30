@@ -1,0 +1,17 @@
+
+
+---
+  - name: install httpd
+    hosts: web_srv
+    remote_user: ec2-user
+    become: yes 
+    roles: 
+      - web
+    
+    
+  - name: install DB
+    hosts: db_srv
+    remote_user: ec2-user
+    become: yes
+    roles: 
+      - db

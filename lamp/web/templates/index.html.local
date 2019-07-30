@@ -1,0 +1,15 @@
+<html>
+<body>
+
+<h1><center>index.html for domain {{ domain_name }}</center></h1>
+
+<p>
+<p>
+
+<?php
+phpinfo();
+?>
+
+<h1> The owner of the site is {{ owner }} </h1>
+</body>
+</html>

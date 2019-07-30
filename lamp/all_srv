@@ -1,0 +1,5 @@
+[web_srv]
+<server ip>
+
+[db_srv]
+<server ip>

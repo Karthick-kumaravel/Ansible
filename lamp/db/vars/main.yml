@@ -1,0 +1,4 @@
+dbuser: karthick
+dbname: app_db 
+password: redhat
+mysql_port: 3306

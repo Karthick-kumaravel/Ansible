@@ -1,0 +1,17 @@
+
+---
+- name: install http and php
+  yum: name={{ item }} state=present
+  with_items:
+    - httpd24
+    - httpd24-tools
+    - php72
+    - git
+    
+
+- name: start service
+  service: name=httpd state=started enabled=yes
+
+- name: copy index file
+  template: src=index.html.local dest=/var/www/html/index.php
+  notify: restart http

@@ -1,0 +1,23 @@
+
+---
+  - name: install db
+    yum: name={{ item }} state=installed
+    with_items:
+      - mysql-server 
+      - MySQL-python 
+
+  - name: install PyMySQL
+    pip: name=PyMySQL
+
+  - name: start mysql
+    service: name=mysqld state=started enabled=yes
+
+  - name: copy mysql config file
+    template: src=my.cnf.local dest=/etc/my.cnf 
+    notify: restart mysql
+
+  - name: create DB
+    mysql_db: name={{ dbname }} state=present
+
+  - name: create DB user 
+    mysql_user: name={{ dbuser }} password={{ password }} priv=*.*:ALL host='localhost' state=present
