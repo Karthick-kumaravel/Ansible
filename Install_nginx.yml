@@ -1,0 +1,25 @@
+####################### INSTALL NGINX ###########################
+
+- hosts: Support
+  tasks:
+        - name: install nginx
+          package:
+                name: nginx.x86_64
+                state: latest
+          notify: 
+          - start
+          become: yes
+        
+        - name: putting nginx index file
+          copy:
+                src: index.html
+                dest: /usr/share/nginx/html/
+          become: yes
+
+
+  handlers:
+        - name: start
+          service:
+                name: nginx 
+                state: started
+          become: yes
