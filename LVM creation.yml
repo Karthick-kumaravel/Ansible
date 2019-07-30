@@ -1,0 +1,38 @@
+################################ Creating LVM in Client machine via Ansible ################################ 
+
+---
+- hosts: localhost
+  sudo: yes
+  tasks:
+
+        - name: partitioning the new partition - sda1 & sda2
+          shell: echo -e "n\np\n1\n\n+100M\nt\n1\n8e\nn\np\n2\n\n+100M\nt\n2\n8e\nw\n" | sudo fdisk /dev/sdb
+          args:
+                executable: /bin/bash
+
+        - name: creating vg
+          lvg: 
+                vg: new_vg
+                pvs: /dev/sdb1,/dev/sdb2
+
+        - name: creating lvm
+          lvol:
+                vg: new_vg
+                lv: new_lvm
+                size: 100m
+
+        - name: createing filesystem 
+          filesystem: 
+                fstype: ext4
+                dev: /dev/new_vg/new_lvm
+        
+        - name: mounting the newly created Lvm
+          mount:
+                name: /mnt/
+                src: /dev/new_vg/new_lvm
+                fstype: ext4
+                state: mounted
+
+
+Note: This will automatically put the entry in the "/etc/fstab" for persistant mount.
+
